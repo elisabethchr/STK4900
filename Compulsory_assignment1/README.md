@@ -1,5 +1,5 @@
 # Mandatory assignment 1
-This is the first compuslory exercise in the course STK4900 at UiO. This project contains an analysis of air pollution at a ertain location,
+This is the first compuslory exercise in the course STK4900 at UiO. This project contains an analysis of air pollution at a certain location,
 and blood pressure of three test groups.
 
 ## Air pollution
