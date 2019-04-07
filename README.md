@@ -3,4 +3,4 @@ This is the STK4900-course for statistical methods and its applications at UiO, 
 
 
 ### Mandatory assignment 1
-This project contains an analysis of air pollution at a certain location, and blood pressure of three test groups.
+This project contains an analysis of air pollution at a certain location, and blood pressure of three test groups. The analysis is done using the program R.
