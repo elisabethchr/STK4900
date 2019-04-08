@@ -12,21 +12,42 @@ y = crabs$y
 width = crabs$width
 weight = crabs$weight
 color = crabs$color
+spine = crabs$spine
+
+color_group = factor(color)
+spine_group = factor(spine)
+
+#function for computing odds ratio and relative risk with a 95% CI
+expcoef=function(glmobj)
+{
+  regtab=summary(glmobj)$coef
+  expcoef=exp(regtab[,1])
+  coefs = regtab[,1]
+  lower=expcoef*exp(-1.96*regtab[,2])
+  upper=expcoef*exp(1.96*regtab[,2])
+  cbind(expcoef, RR, lower,upper)
+}
 
 
 #a) Logistic regression model
-#Since we are considering a binary variable (y = 0, 1), instead of a numerical, we can consider a logistic regression 
-#model for studying the probability of presence of satellites.
-
 fit.width = glm(y~width,data=crabs,family=binomial)
 print(fit.width)
 summary(fit.width)
 
 
-
 #b) Odds ratio
-OR = exp(coef(fit.width))
-conf = confint(fit.width)   #95% confidence interval
+expcoef(fit.width)
 
-OR.width = exp(cbind(OR, conf))
+#c) Explanatory variables weight, color, spine
+fit.weight = glm(y~weight,data=crabs,family=binomial)
+print(fit.weight)
+#summary(fit.weight)
+
+fit.color = glm(y~color_group,data=crabs,family=binomial)
+print(fit.color)
+#summary(fit.color)
+
+fit.spine = glm(y~spine_group,data=crabs,family=binomial)
+print(fit.spine)
+#summary(fit.spine)
 
