@@ -103,8 +103,8 @@ anova(fit.null.col, fit.width.col, fit.weight.col.width, test="Chisq")
 anova(fit.null.col, fit.weight.col, fit.weight.col.width, test="Chisq")
 #End up with model 2 with a p-value of p = 1.735e-06.
 
-#In total, fit.width.col is a better fit than fit.weight.col, where we get a p-value of p = 6.873e-07 for fit.width.col 
-#compared to fit.weight.col with p = 8.627e-07. Both models are a better fit than when including all three predictors
+#In total, fit.width.col is a better fit than fit.weight.col, where we get a p-value of p = 7.041e-07 for fit.width.col 
+#compared to fit.weight.col with p = 1.735e-06. Both models are a better fit than when including all three predictors
 #in the same model (fit.weight.col.width).
 
 #e) Interactions
