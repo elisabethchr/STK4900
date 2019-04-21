@@ -10,8 +10,7 @@ We are here studying whether or not the claim that athletes from countries with 
 win medals than countries with a smaller population size and lower GDP.
 
 ### Randomized clinical trial
-here, we are studying whether or not patients treated with the hormone prednisone had better cance at survival than patients who got an 
-inactive placebo treatment. The different factors considered in this study are which treatment the patients are getting, their gender,
+Here, we are investigating whether or not patients treated with the hormone prednisone had better cance at survival than patients who got an inactive placebo treatment. The different factors considered in this study are which treatment the patients are getting, their gender,
 their age as well as the degree of ascites at beginning of the treatment.
 
 **Source files included:**
