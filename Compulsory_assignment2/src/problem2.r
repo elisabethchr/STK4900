@@ -56,11 +56,6 @@ poissontab=function(counts,x=(0:(length(counts)-1)))
 
 
 #a)
-#For a Poisson distribution we know that the expected value and the variance are equal. One method of checking this is to
-#look for overdispersion. I.e. if mean(y) and variance s^2 differ (which they shouldn't) too much then CD = s^2/mean(y)>1.
-#If CD is greater than 1, it is a sign of overdispersion,i.e. when there is greater variablility in a data set than would
-#be expected based on a given statistical model.
-
 #Check if Poisson distributed
 summary(medals2000)
 table(medals2000)
@@ -68,20 +63,11 @@ table(medals2000)
 summary(medals1996)
 table(medals1996)
 
-pdf(file = 'C:\\Users\\Elisabeth\\Documents\\Courses\\STK4900\\Compulsory_assignment2\\data\\problem2\\poissondist.pdf')
+pdf(file = 'data\\problem2\\poissondist.pdf')
 par(mfrow=c(2,1))
 plot(table(medals1996), pch=1, col="blue", xlab="No. of medals", ylab="No. of countries", main=TeX("Olympics 1996"))
 plot(table(medals2000), pch=1,col="red", xlab="No. of medals", ylab="No. of countries", main=TeX("Olympics 2000"))
 dev.off()
-
-#Checking mean, variance and CD
-m = mean(medals2000)
-s2 = var(medals2000)
-s2/m
-
-m = mean(medals1996)
-s2 = var(medals1996)
-s2/m
 
 
 #b) Poisson regression model
@@ -102,16 +88,10 @@ fit.null = glm(medals2000~offset(log.ath), data=olympic, family=poisson)
 fit.pop = glm(medals2000~offset(log.ath) + log.pop, data=olympic, family=poisson)
 fit.pop.GDP = glm(medals2000~offset(log.ath) + log.pop + GDP, data=olympic, family=poisson)
 anova(fit.null, fit.pop, fit.pop.GDP, test="Chisq")
-#Model 2 is best with a p-value of p=1.401e-15
 
 #Simplifying model by interactions
 fit.interaction1 = glm(medals2000~offset(log.ath) + log.pop + GDP + log.pop:log.ath, data=olympic, family=poisson)
 fit.interaction2 = glm(medals2000~offset(log.ath) + log.pop + GDP + log.pop:log.ath + log.pop:GDP, 
                        data=olympic, family=poisson)
 anova(fit.pop, fit.interaction1, fit.interaction2, test="Chisq")
-
-
-
-
-
 

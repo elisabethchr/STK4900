@@ -41,7 +41,7 @@ fit = glm(y ~ width, data=mtcars, family=binomial)
 newdat <- data.frame(width=seq(min(crabs$width), max(crabs$width),len=1000))
 newdat$y = predict(fit, newdata=newdat, type="response")
 
-pdf(file = 'C:\\Users\\Elisabeth\\Documents\\Courses\\STK4900\\Compulsory_assignment2\\data\\problem1\\logreg_width.pdf')
+pdf(file = 'data\\problem1\\logreg_width.pdf')
 plot(y~width, data=crabs, col="red4", main="Logistic regression")
 lines(y ~ width, newdat, col="blue3", lwd=2)
 legend(21, 0.85, legend=c("Binary data", "Fit"),
@@ -80,9 +80,6 @@ expcoef(fit.color)
 #d) All variables in regression
 fit.all = glm(y~ weight + width + color_group + spine_group,data=crabs,family=binomial)
 summary(fit.all)
-#anova(fit.all)
-#We see that all coefficient has an estimate different from zero. To check whether or not a predictor actually has an
-#impact on the model we can run a likelihood ratio test, comparing one with the predictor and one without the predictor.
 
 
 #Likelihood ratio test - run ANOVA and compare deviances when either including or excluding certain predictors
@@ -93,7 +90,7 @@ fit.width.col = glm(y~width + color_group, data=crabs,family=binomial)
 fit.width.col.weight = glm(y~width+color_group +spine_group, data=crabs,family=binomial)
 fit.width.col.weight.spine = glm(y~width + color_group + weight + spine_group, data=crabs,family=binomial)
 anova(fit.null.col, fit.width.col, fit.width.col.weight, fit.width.col.weight.spine, test="Chisq")
-#End up with model 2
+
 
 #Including 2'nd order terms:
 fit.width.col = glm(y~width + color_group, data=crabs,family=binomial)
@@ -106,16 +103,9 @@ fit.null.col = glm(y~color_group, data=crabs,family=binomial)
 fit.width.col = glm(y~width+color_group, data=crabs,family=binomial)
 fit.weight.col = glm(y~width+spine+color_group, data=crabs, family=binomial)
 anova(fit.null.col, fit.width.col, fit.weight.col, test="Chisq")
-#End up with model 2, with a p-value of p = 7.041e-07.
 anova(fit.null.col, fit.width.col, fit.weight.col.width, test="Chisq")
-#End up with model 2 with a p-value of p = 1.237e-06.
 
 summary(fit.width.col)
-
-#In total, fit.width.col is a better fit than fit.weight.col, where we get a p-value of p = 7.041e-07 for fit.width.col 
-#compared to fit.weight.col with p = 1.735e-06. Both models are a better fit than when including all three predictors
-#in the same model (fit.weight.col.width).
-
 
 #Residuals and fitted values from best model:
 fit.width.col.res = fit.width.col$residuals
@@ -140,8 +130,5 @@ fit.col.interaction3 = glm(y~color_group + width + weight:width + width:color_gr
                            data=crabs,family=binomial)
 fit.col.interaction4 = glm(y~color_group + width + width:weight + width:color_group + weight:color_group + 
                              weight:color_group:spine_group, data=crabs,family=binomial)
-#fit.col.interaction6 = glm(y~color_group + width + width:color_group + spine:width:weight, data=crabs,family=binomial)
 
 anova(fit.width.col, fit.col.interaction1, fit.col.interaction2, fit.col.interaction3, fit.col.interaction4, test="Chisq")
-#None of these interactions are signifacnt enough to be taken into consideration. Thus, we are still left width
-#fit.width.col as the best fit.

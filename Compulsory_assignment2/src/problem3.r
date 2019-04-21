@@ -1,4 +1,4 @@
-#Problem 2:
+#Problem 3:
 library(latex2exp)
 library(car)
 library(gam)
@@ -34,42 +34,59 @@ HRratio = function(data)
 
 #a) Kaplan-Meier plots
 #treatment:
-fit.treat=survfit(Surv(time,status==1)~treat, data=cirrhosis)
+fit.treat=survfit(Surv(time,status==1)~factor(treat), data=cirrhosis)
+pdf(file='data\\problem3\\KM_fittreat.pdf')
 par(mfrow=c(1,1))
-plot(fit.treat, lty=1:2, mark.time=F, col=c('red', 'black'), xlab = 'Time [days]', ylab='Survival')
+plot(fit.treat, lty=1:2, mark.time=F, col=c('red', 'black'), xlab = 'Time [days]', ylab='Survival', main='Treatment')
+legend(3500, 0.9, legend=c('Prednisone', 'Placebo'), lty=1:2, col=c('red', 'black'))
+dev.off()
 print(fit.treat)
 
-#sex:
+#gender:
 fit.sex=survfit(Surv(time,status==1)~factor(sex), data=cirrhosis)
+pdf(file='data\\problem3\\KM_fitsex.pdf')
 par(mfrow=c(1,1))
-plot(fit.sex, lty=1:2, mark.time=F)
+plot(fit.sex, lty=1:2, mark.time=F, col=c('red', 'blue'), xlab = 'Time [days]', ylab='Survival', main='Gender')
+legend(3500, 0.9, legend=c('Female', 'Male'), lty=1:2, col=c('red', 'blue'))
+dev.off()
 print(fit.sex)
 
 #ascites:
-fit.asc=survfit(Surv(time,status==1)~asc, data=cirrhosis)
+fit.asc=survfit(Surv(time,status==1)~factor(asc), data=cirrhosis)
+pdf(file='data\\problem3\\KM_fitascites.pdf')
 par(mfrow=c(1,1))
-plot(fit.asc, lty=1:3, mark.time=F)
+plot(fit.asc, lty=1:3, mark.time=F, col=c('red', 'blue', 'black'), xlab = 'Time [days]', ylab='Survival', main='Ascites')
+legend(3500, 0.9, legend=c('None', 'Slight', 'Marked'), lty=1:3, col=c('red', 'blue', 'black'))
+dev.off()
 print(fit.asc)
 
 #grouped age
-fit.agegr=survfit(Surv(time,status==1)~agegr, data=cirrhosis)
+fit.agegr=survfit(Surv(time,status==1)~factor(agegr), data=cirrhosis)
+pdf(file='data\\problem3\\KM_fitagegr.pdf')
 par(mfrow=c(1,1))
-plot(fit.agegr, lty=1:3, mark.time=F)
+plot(fit.agegr, lty=1:3, mark.time=F, col=c('red', 'blue', 'black'), xlab = 'Time [days]', ylab='Survival', main='Age group')
+legend(3500, 0.9, legend=c('<50', '50-65', '>65'), lty=1:3, col=c('red', 'blue', 'black'))
+dev.off()
 print(fit.agegr)
 
 
 #b) Logrank test
-survdiff(Surv(time,status==1)~treat, data=cirrhosis)  #treat
-survdiff(Surv(time,status==1)~sex, data=cirrhosis)    #sex
-survdiff(Surv(time,status==1)~asc, data=cirrhosis)    #asc
-survdiff(Surv(time,status==1)~agegr, data=cirrhosis)  #agegr
+survdiff(Surv(time,status==1)~factor(treat), data=cirrhosis)  #treat
+survdiff(Surv(time,status==1)~factor(sex), data=cirrhosis)    #gender
+survdiff(Surv(time,status==1)~factor(asc), data=cirrhosis)    #asc
+survdiff(Surv(time,status==1)~factor(agegr), data=cirrhosis)  #agegr
 
 
-#c) Cox regression and hazard ratio
+#c) Multiple Cox regression and hazard ratio
 #Effects of all ovariants studied simultaneously
 fit.all=coxph(Surv(time,status==1)~factor(sex)+factor(treat) + age + factor(asc) ,data=cirrhosis)
 print(fit.all)
 summary(fit.all)
+
+fit.women=coxph(Surv(time,status==1)~factor(sex==0)+factor(treat) + age + factor(asc) ,data=cirrhosis)
+fit.men=coxph(Surv(time,status==1)~factor(sex==1)+factor(treat) + age + factor(asc) ,data=cirrhosis)
+summary(fit.women)
+summary(fit.men)
 
 HRratio(fit.all)
 
