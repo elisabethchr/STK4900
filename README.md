@@ -9,5 +9,6 @@ This project contains an analysis of air pollution at a certain location, and bl
 This project contains three different analyses:
  - Analysis on amount of satelittes during spawning season for horseshoe crabs
  - Analysis on amount of medals won by a country during the olympics
- - Analysis on treatment of the hormone prednisone against the disease cirrhosis.  
+ - Analysis on treatment of the hormone prednisone against the disease cirrhosis.
+ 
  Each analysis is done using the program R.
